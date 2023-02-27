@@ -2,15 +2,14 @@
   "solr_addr" : "127.0.0.1:8983/solr",
   "sits_dir" : "/var/www",
   "files_relative_dir": "files/original",
-  "item_path": ",/s/repo/item/",
+  "item_path": "./s/repo/item/",
   "sites" : {
     "repo_rgf" : {
       "solr_core": "rgf",
       "instance_dir": "/usr/custom/rgf",
       "temp_dir": "/usr/custom/rgf/temp",
       "cover_page_dir" : "/usr/custom/rgf/cover",
-      "uri" : "dr.rgf.bg.ac.rs",
-
+      "uri" : "dr.rgf.bg.ac.rs"
     }
   }
 }

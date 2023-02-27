@@ -1,10 +1,15 @@
-from flask import Flask, request, Response, render_template, make_response
-from functions import cfg
+from flask import Flask, request, render_template
 from os import environ
+from helper import cfg
+from rq_handler import process_req, process_req2, task_in_background
+import redis
+from rq import Queue
 
 
 app = Flask(__name__)
 app.config["DEBUG"] = False
+#r = redis.Redis()
+#q = Queue(connection=r)
 
 
 @app.route('/')
@@ -19,44 +24,15 @@ def about():
 
 @app.route('/api', methods=['POST', 'GET'])
 def api():
-    args = process_req(request)
-    if len(args) == 1:
-        return render_template("evaluation_report.html", enum=enumerate, round=round)
+    #q.enqueue(process_req)
+    return process_req2()
 
 
-@app.route('/remove_first_page', methods=['POST', 'GET'])
-def api():
-    args = process_req(request)
-    if len(args) == 1:
-        return render_template("evaluation_report.html", enum=enumerate, round=round)
 
-
-def process_req(req):
-    query_parameters = req.args
-    if len(query_parameters) == 0:
-        query_parameters = req.form
-
-    text = query_parameters.get('text')
-    if "eval" in query_parameters:
-        args = [text]
-    elif "pv" in query_parameters:
-        x = cfg["inputs"]["visualisation"]
-        args = [text]
-    else:
-        x = cfg["inputs"]["generation"]
-        if query_parameters.get('count'):
-            cn = int(query_parameters.get('count'))
-        alt = query_parameters.get('alt')
-        args = [text, cn]
-
-    if "log" in cfg and cfg["log"]:
-        try:
-            with open(cfg["log"], "a+", encoding="utf-8") as lf:
-                lf.write(request.remote_addr + "\t" + "\t".join([str(x) for x in args]) + "\n")
-        except:
-            pass
-
-    return args
+@app.route('/remove_first_pages', methods=['POST', 'GET'])
+def remove_first_pages():
+    process_req(request, target="remove_first_pages")
+    #q.enqueue(process_req, args=request, kwargs={"target": "remove_first_pages"})
 
 
 if __name__ == "__main__":

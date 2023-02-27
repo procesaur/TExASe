@@ -31,7 +31,6 @@ class MyServer(BaseHTTPRequestHandler):
 if __name__ == '__main__':
     hostName = "localhost"
     hostPort = 12346
-	
 
     myServer = HTTPServer((hostName, hostPort), MyServer)
     print(time.asctime(), "Server Started @ %s:%s" % (hostName, hostPort))

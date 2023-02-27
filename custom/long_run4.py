@@ -213,7 +213,7 @@ def rq_handler(data):
     f.close()
     
     
-   def process_txt(txt):
+def process_txt(txt):
     txt = sub(r'\t+', ' ', txt)
     txt = sub(r'(-)?\n+', '', txt)
     txt = sub(r'\n,', ' ', txt)
