@@ -3,6 +3,11 @@
   "sits_dir" : "/var/www",
   "files_relative_dir": "files/original",
   "item_path": "./s/repo/item/",
+  "redis": {
+    "url": "redis://127.0.0.1",
+    "port": "6379",
+    "on": 0
+  },
   "sites" : {
     "repo_rgf" : {
       "solr_core": "rgf",

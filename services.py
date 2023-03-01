@@ -1,8 +1,12 @@
 from helper import cfg
 
 
-def extract(file, lang, save_pdf):
-    return "sdasdasdasdadasdasdasd"
+def extract(args):
+    file, lang, save_pdf = args
+
+    with open("E:aaaa.txt", "w+") as tf:
+        tf.write("asdasdasdad")
+    return "asdasdasd"
 
 
 def remove_first_page(filename):

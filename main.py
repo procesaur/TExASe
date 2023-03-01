@@ -1,15 +1,16 @@
 from flask import Flask, request, render_template
 from os import environ
 from helper import cfg
-from rq_handler import process_req, process_req2, task_in_background
-import redis
-from rq import Queue
+from rq_handler import process_req
+from redisworks import redis_q as q
 
 
 app = Flask(__name__)
 app.config["DEBUG"] = False
-#r = redis.Redis()
-#q = Queue(connection=r)
+
+
+def count_and_save_words(i):
+    return i
 
 
 @app.route('/')
@@ -24,15 +25,22 @@ def about():
 
 @app.route('/api', methods=['POST', 'GET'])
 def api():
-    #q.enqueue(process_req)
-    return process_req2()
-
+    function, args = process_req(request)
+    if q:
+        job = q.enqueue(function, args)
+        return "sent to redis que, id:" + str(job.get_id())
+    else:
+        return function(args)
 
 
 @app.route('/remove_first_pages', methods=['POST', 'GET'])
 def remove_first_pages():
-    process_req(request, target="remove_first_pages")
-    #q.enqueue(process_req, args=request, kwargs={"target": "remove_first_pages"})
+    function, args = process_req(request)
+    if q:
+        job = q.enqueue(function, args)
+        return "sent to redis que, id:" + str(job.get_id())
+    else:
+        return function(args)
 
 
 if __name__ == "__main__":
