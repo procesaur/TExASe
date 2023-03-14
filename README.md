@@ -1,1 +1,1 @@
-# omeka-ocr-solr
+# Text Extraction Api Services - TExASe

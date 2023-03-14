@@ -176,9 +176,9 @@ def rq_handler(data):
 
     omeka_instance = filepaths[0].split('/')[4]
     solr_core = omeka_instance.split('_')[1]
-    instance_dir = '/usr/custom/' + omeka_instance
-    temp_dir = '/usr/custom/' + omeka_instance + '/temp'
-    cover_page_dir = '/usr/custom/' + omeka_instance + '/cover_page'
+    instance_dir = '/usr/legacy/' + omeka_instance
+    temp_dir = '/usr/legacy/' + omeka_instance + '/temp'
+    cover_page_dir = '/usr/legacy/' + omeka_instance + '/cover_page'
     ###################################################
     f.write(' '.join(['\n####', str(datetime.now()), '####', '\n']))
     f.write('\n' + data + '\n')

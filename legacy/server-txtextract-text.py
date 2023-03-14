@@ -23,7 +23,7 @@ class MyServer(BaseHTTPRequestHandler):
         data = post_data.decode("utf-8")
         print('Received: ' + data + '\nText extraction started...')
         # Popen(['python3', 'long_run.py', data], stdout=DEVNULL, stderr=STDOUT)
-        # Popen(['python3', '/usr/custom/long_run2.py', data])
+        # Popen(['python3', '/usr/legacy/long_run2.py', data])
         result = q.enqueue(rq_handler, data)
         print(time.asctime(), "Server Listening @ %s:%s" % (hostName, hostPort))
 

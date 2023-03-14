@@ -1,4 +1,4 @@
-from os import name, remove
+from os import remove
 from json import load
 from os import path as px
 

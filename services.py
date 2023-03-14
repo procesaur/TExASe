@@ -1,4 +1,5 @@
 from helper import cfg
+import textract
 
 
 def extract(args):
