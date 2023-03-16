@@ -1,1 +1,1 @@
-# Text Extraction Api Services - TExASe
+# Text Extraction Api Service - TExASe
