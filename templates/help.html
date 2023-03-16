@@ -2,9 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='main.css') }}">
 </head>
 <body>
+
+<h1 id="text-extraction-api-service-texase">Text Extraction Api Service - TExASe</h1>
+<h2 id="use-gui">Use GUI</h2>
+<p>Simply, on the left, pick a file and click process. The result will appear on the right.</p>
+<p>Optionally, if you want a more precise OCR, input a language code for tesseract bellow.</p>
+<h2 id="use-api">Use API</h2>
+<h3 id="url">url</h3>
+<p>hostname/api</p>
+<h3 id="required-args">required args</h3>
+<p>file : containing filename of the file</p>
+<h3 id="optional-args">optional args</h3>
+<p>lang : language code for tesseract ocr
+renew : 1, if you want your file to be replaced with a new one. defult is 0 for False.</p>
 
 </body>
 </html>
