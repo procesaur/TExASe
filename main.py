@@ -33,16 +33,6 @@ def api():
         return function(args)
 
 
-@app.route('/remove_first_pages', methods=['POST', 'GET'])
-def remove_first_pages():
-    function, args = process_req(request)
-    if q:
-        job = q.enqueue(function, args)
-        return "sent to redis que, id:" + str(job.get_id())
-    else:
-        return function(args)
-
-
 if __name__ == "__main__":
     port = int(environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)

@@ -20,18 +20,6 @@ def tryDel(file):
         pass
 
 
-def limit(x, mini, maxi):
-    if isinstance(x, str):
-        if len(x) > maxi:
-            x = x[:maxi]
-    else:
-        if x < mini:
-            x = mini
-        if x > maxi:
-            x = maxi
-    return x
-
-
 def log_stuff(stuff):
     if "log" in cfg and cfg["log"]:
         try:
