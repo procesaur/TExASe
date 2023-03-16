@@ -14,10 +14,17 @@
 <h3 id="url">url</h3>
 <p>hostname/api</p>
 <h3 id="required-args">required args</h3>
-<p>file : containing filename of the file</p>
+<p><strong>file</strong> : containing filename of the file</p>
 <h3 id="optional-args">optional args</h3>
-<p>lang : language code for tesseract ocr
-renew : 1, if you want your file to be replaced with a new one. defult is 0 for False.</p>
+<p><strong>lang</strong> : language code for tesseract ocr
+<strong>renew</strong> : 1, if you want your file to be replaced with a new one. defult is 0 for False.</p>
+<h1 id="options">Options</h1>
+<p>Some of the options are configured in the <a href="config.json">config.json</a> file.
+These include:</p>
+<p><strong>languages</strong> : a list of default languages to be used in OCR.</p>
+<p><strong>log</strong> : string, file location of a writable log file. If the file is specified and writable, all requests will be logged in it.</p>
+<p><strong>redis</strong> : redis server options. If <strong>on</strong> is set to <strong>1</strong>, all requests will go through a redis queue on specified <strong>url</strong> and <strong>port</strong>.</p>
+
 
 </body>
 </html>
