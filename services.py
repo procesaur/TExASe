@@ -2,6 +2,7 @@ from helper import cfg
 from tika import parser
 from ocrmypdf import ocr
 from io import BytesIO
+from postprocessing import postprocess
 
 
 def extract(args):
@@ -17,19 +18,18 @@ def extract(args):
         output_file = None
 
     text = parser.from_file(file)
+    text = postprocess(text)
 
     return text, output_file
 
 
-def ocr_file(file, lang):
+def ocr_file(bytes, lang):
     output = BytesIO()
-    try:
-        if lang is None and cfg["languages"]:
-            lang = "+".join(cfg["languages"])
-            ocr(input_file=file, output_file=output, skip_text=True, language=lang, deskew=True)
-        else:
-            ocr(input_file=file, output_file=output, skip_text=True)
-        return output
+    input = BytesIO(bytes)
 
-    except:
-        return None
+    if lang is None and cfg["languages"]:
+        lang = "+".join(cfg["languages"])
+        ocr(input_file=input, output_file=output, skip_text=True, language=lang, deskew=True)
+    else:
+        ocr(input_file=input, output_file=output, skip_text=True)
+    return output

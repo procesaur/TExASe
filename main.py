@@ -1,8 +1,8 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, Response
 from os import environ
 from helper import cfg
 from rq_handler import process_req
-from redisworks import redis_q as q
+from redisworks import q
 
 
 app = Flask(__name__)
@@ -30,7 +30,12 @@ def api():
         job = q.enqueue(function, args)
         return "sent to redis que, id:" + str(job.get_id())
     else:
-        return function(args)
+        text, out_file = function(args)
+        if out_file:
+            return Response(out_file, mimetype="applictaion/pdf",
+                            headers={'Content-Disposition': 'attachment;filename=result.pdf'})
+        else:
+            return text
 
 
 if __name__ == "__main__":

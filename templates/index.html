@@ -2,9 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='main.css') }}">
+    <script>
+        function help(){
+            document.getElementById('if').src = "/help";
+        }
+    </script>
 </head>
 <body>
+
+<div class="half">
+
+    <form target="if" method="post" enctype = "multipart/form-data" class="expand">
+        <table class="expand">
+            <tr>
+                <td>
+                    <h2>
+                        <span class="help" onclick="help()">?</span>
+                    </h2>
+                    <div class="center floating">
+                        Upload a file here:
+                        <input type="file" name="file" required/>
+                    </div>
+                    <div class="center floating">
+                        Input language code (optional):
+                        <input type="text" name="lang"/>
+                    </div>
+                    <div class="center floating">
+                        <input type = "submit" value="Process" formaction="/api"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+
+<iframe class="half" name="if" id="if" src="/help"></iframe>
 
 </body>
 </html>

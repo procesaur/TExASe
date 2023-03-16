@@ -29,9 +29,9 @@ def params_from_req(req):
 
 def process_file_req(req, query_parameters):
     if "file" in req.files:
-        file = req.files["file"]
-        name = file.filename
-    else:
+        file = req.files["file"].read()
+        name = req.files["file"].filename
+    if "file" not in req.files or name == '':
         name = query_parameters.get('file')
         if px.exists(name):
             with open(name, "rb") as f:
@@ -50,7 +50,7 @@ def process_file_req(req, query_parameters):
 def get_string(params, name, alternative=None):
     try:
         result = params.get(name)
-        if result is "":
+        if result == "":
             result = alternative
     except:
         result = alternative
