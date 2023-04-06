@@ -1,4 +1,4 @@
-# Text Extraction Api Service - TExASe
+# Text Extraction Api Services - TExASe
 
 # List of services
 - **extract** - Extracts text from the provided file using [tika-python](https://pypi.org/project/tika/) port for [apache tika](https://tika.apache.org/). It requires only a file (with readable content) and returns text.
