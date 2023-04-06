@@ -1,30 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='main.css') }}">
-</head>
-<body>
-
 <h1 id="text-extraction-api-service-texase">Text Extraction Api Service - TExASe</h1>
+<h1 id="list-of-services">List of services</h1>
+<ul>
+<li><strong>extract</strong> - Extracts text from the provided file using <a href="https://pypi.org/project/tika/">tika-python</a> port for <a href="https://tika.apache.org/">apache tika</a>. It requires only a file (with readable content) and returns text.</li>
+</ul>
+<ul>
+<li><strong>ocr</strong> - Performs OCR on PDF-s and image-files not containing readable text.
+Image processing in done using <a href="https://github.com/tesseract-ocr/tesseract">tesseract-ocr</a> via <a href="https://pypi.org/project/pytesseract/">pytesseract</a> and <a href="https://pillow.readthedocs.io/en/stable/">Pillow</a>, while pdf processing is done using <a href="https://github.com/ocrmypdf/OCRmyPDF">ocrmypdf</a>, also based on <a href="https://github.com/tesseract-ocr/tesseract">tesseract-ocr</a>.
+This service accept optional language code along the required file and returns a new, readable, file as a result.</li>
+</ul>
+<ul>
+<li><strong>ocr_and_extract</strong> - First performs OCR on unreadable files to make them readable, and then extracts the text from them.
+It returns an HTML containing extracted text, as well as a base64 string of a new file (if OCR was performed).</li>
+</ul>
+<ul>
+<li><strong>renew</strong> - Only works with file_paths. It OCR-s a file on the provided path and then replace it with a new version.</li>
+</ul>
 <h2 id="use-gui">Use GUI</h2>
 <p>Simply, on the left, pick a file and click process. The result will appear on the right.</p>
-<p>Optionally, if you want a more precise OCR, input a language code for tesseract bellow.</p>
+<p>Optionally, if you want a more precise OCR, input a (supported) language code for tesseract bellow.</p>
+<p>Current GUI supports only <strong>ocr_and_extract</strong> service.</p>
 <h2 id="use-api">Use API</h2>
 <h3 id="url">url</h3>
-<p>hostname/api</p>
-<h3 id="required-args">required args</h3>
-<p><strong>file</strong> : containing filename of the file</p>
+<p>hostname/api/<strong>service_name</strong></p>
+<h3 id="required-arg">required arg</h3>
+<p><strong>file</strong> : containing filename of a posted file.</p>
 <h3 id="optional-args">optional args</h3>
-<p><strong>lang</strong> : language code for tesseract ocr
-<strong>renew</strong> : 1, if you want your file to be replaced with a new one. defult is 0 for False.</p>
+<p>Optional args are definied for each service in the <a href="config.json">config.json</a> file.
+For example <strong>ocr</strong> service accepts <strong>lang</strong> (language code for tesseract ocr) parameter.</p>
 <h1 id="options">Options</h1>
 <p>Some of the options are configured in the <a href="config.json">config.json</a> file.
 These include:</p>
-<p><strong>languages</strong> : a list of default languages to be used in OCR.</p>
+<p><strong>tesseract</strong> : tesseract service options, including a list of default languages to be used in OCR, path to tesseract service, as well as a list of applicable extensions.</p>
 <p><strong>log</strong> : string, file location of a writable log file. If the file is specified and writable, all requests will be logged in it.</p>
-<p><strong>redis</strong> : redis server options. If <strong>on</strong> is set to <strong>1</strong>, all requests will go through a redis queue on specified <strong>url</strong> and <strong>port</strong>.</p>
-
-
-</body>
-</html>
+<p><strong>redis</strong> : redis server options. If <strong>on</strong> is set to <strong>1</strong>, all requests will go through a redis queue on specified <strong>url</strong> and <strong>port</strong>. Redis is only available for services that do not return a value.</p>
+<p><strong>services</strong> a list of available services, and their respected parameter definitions.</p>
+<h1 id="requirements">Requirements</h1>
+<pre><code>sudo apt-<span class="hljs-built_in">get</span> install python3-<span class="hljs-built_in">dev</span> libxml2-<span class="hljs-built_in">dev</span> libxslt1-<span class="hljs-built_in">dev</span> tesseract-ocr
+</code></pre><p>for ubuntu and</p>
+<pre><code>pip <span class="hljs-keyword">install</span> flask redis rq tika ocrmypdf pytesseract PIL
+</code></pre><p>from pip.</p>
