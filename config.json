@@ -1,9 +1,66 @@
 {
-  "languages": ["srp", "srp_latn"],
+  "tesseract": {
+    "path": "C:/Program Files/Tesseract-OCR/tesseract.exe",
+    "img_ext" : [".bmp", ".jpg", ".jpeg", ".gif", ".png"],
+    "languages": ["srp", "srp_latn"]
+  },
+
   "redis": {
     "url": "redis://127.0.0.1",
     "port": "6379",
     "on": 0
   },
-  "log": ""
+
+  "log": "",
+
+  "services": {
+
+    "extract": {
+      "params": {
+      },
+      "return": "text"
+    },
+
+    "ocr": {
+      "params": {
+        "lang": "string"
+      },
+      "return": "file"
+    },
+
+    "ocr_and_extract": {
+      "params": {
+        "lang": "string"
+      },
+      "return": "html"
+    },
+
+    "renew": {
+      "params": {
+        "lang": "string"
+      },
+      "return": null
+    },
+
+    "add_cover_page": {
+      "params": {
+        "header": "string",
+        "title": "string",
+        "authors": "string",
+        "logo": "string",
+        "repo_name": "string",
+        "repo_name_short": "string",
+        "doi": "string",
+        "uri": "string",
+        "footer": "string"
+      },
+      "return": null
+    },
+
+    "remove_cover_page": {
+      "params": {
+      },
+      "return": null
+    }
+  }
 }

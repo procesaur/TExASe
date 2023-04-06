@@ -54,7 +54,7 @@ input[type=submit], input::-webkit-file-upload-button{
 
 .center {
     text-align-last: center;
-    height: 100px;
+    padding:15px;
     width: 100%;
     display: block;
     vertical-align: middle;
@@ -141,3 +141,33 @@ output{
 h2,h3{
     margin:15px
 }
+
+
+
+input[type=radio], input[type=checkbox] {
+  display: none;
+  visibility: hidden; }
+label {  text-transform: uppercase }
+label, label:before, .radio-switch, .radio-switch:before {
+  -webkit-transition: all 140ms ease-in-out;
+  transition: all 140ms ease-in-out;
+  cursor: pointer; }
+::selection {  background-color: transparent }
+::moz-selection {  background-color: transparent }
+::webkit-selection {  background-color: transparent }
+
+input[type=radio]:checked + label {  z-index: -1 }
+input[type=radio]:checked + label:first-of-type {  color: #fa4 }
+input[type=radio]:checked + label:last-of-type {  color: #4af }
+
+
+input[type=radio]:last-of-type:checked ~ .radio-switch {  background-color: #4af }
+input[type=radio]:last-of-type:checked ~ .radio-switch:before {  right: 2px }
+
+input[type=checkbox]:checked + label>span {  background-color: #79bf6d }
+input[type=checkbox] ~ label:before {  color: #d34836 }
+input[type=checkbox]:checked ~ label:before {  color: slategrey }
+input[type=checkbox]:checked ~ label:after {  color: #79bf6d }
+input[type=checkbox]:checked ~ label:after, input[type=checkbox] ~ label:before {  pointer-events: none }
+input[type=checkbox]:checked ~ label:before {  pointer-events: all }
+input[type=checkbox]:checked + label>span:before {  float: right }

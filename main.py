@@ -1,16 +1,14 @@
 from flask import Flask, request, render_template, Response
 from os import environ
-from helper import cfg
+from helper import cfg, get_return_type
 from rq_handler import process_req
 from redisworks import q
+from services import services
+from base64 import b64encode
 
 
 app = Flask(__name__)
 app.config["DEBUG"] = False
-
-
-def count_and_save_words(i):
-    return i
 
 
 @app.route('/')
@@ -23,19 +21,32 @@ def about():
     return render_template('help.html')
 
 
-@app.route('/api', methods=['POST', 'GET'])
-def api():
-    function, args = process_req(request)
-    if q:
-        job = q.enqueue(function, args)
+@app.route('/api/<service>', methods=['POST', 'GET'])
+def api(service):
+
+    filename, args = process_req(request, service)
+
+    if service not in services or service not in cfg["services"]:
+        return ""
+
+    f = services[service]
+    return_type = get_return_type(service)
+
+    if q and not return_type:
+        job = q.enqueue(f, args)
         return "sent to redis que, id:" + str(job.get_id())
     else:
-        text, out_file = function(args)
-        if out_file:
-            return Response(out_file, mimetype="applictaion/pdf",
-                            headers={'Content-Disposition': 'attachment;filename=result.pdf'})
-        else:
+        text, out_file = f(args)
+
+        if return_type == "text":
             return text
+
+        if return_type == "file":
+            return Response(out_file, mimetype="applictaion/pdf",
+                            headers={'Content-Disposition': 'inline;filename=' + filename + '.pdf'})
+        else:
+            b64 = b64encode(out_file).decode("utf-8")
+            return render_template('gui_response.html', file=b64, text=text)
 
 
 if __name__ == "__main__":

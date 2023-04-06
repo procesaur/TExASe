@@ -27,3 +27,9 @@ def log_stuff(stuff):
                 lf.write("\t".join([str(x) for x in stuff]) + "\n")
         except:
             pass
+
+
+def get_return_type(service):
+     if "return" not in cfg["services"][service]:
+         return None
+     return cfg["services"][service]["return"]
