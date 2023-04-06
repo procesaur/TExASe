@@ -12,12 +12,13 @@
     </script>
 </head>
 <body>
-<div>
+<div style="margin-bottom:15px">
     <span><button onclick="copy_text()">Copy text</button></span>
     {% if text != "": %}
     <span style="float:right"><button onclick="download()">Download pdf</button></span>
     {% endif %}
 </div>
+
 <div id="text">
     {{text|safe}}
 </div>

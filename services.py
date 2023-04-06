@@ -24,7 +24,7 @@ def ocr_and_extract(args):
     file_bytes, filetype, params = args
     new_file = ocr_file(file_bytes, filetype, params["lang"])
 
-    text = extract_text(file_bytes)
+    text = extract_text(new_file)
     return text, new_file
 
 
