@@ -56,6 +56,6 @@ These include:
     sudo apt-get install python3-dev libxml2-dev libxslt1-dev tesseract-ocr
 for ubuntu and
 
-    pip install flask redis rq tika ocrmypdf pytesseract PIL
+    pip install flask redis rq tika ocrmypdf pytesseract Pillow
 
 from pip.
