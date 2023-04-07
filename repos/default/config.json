@@ -1,0 +1,14 @@
+{
+  "logo_path": "repos/default/default-logo.png",
+  "repo_name": "Text Extraction Api Default Repository",
+  "repo_name_short": "TExASe",
+  "img_width": "170px",
+  "img_height": "170px",
+  "timestamp_label": "updated:",
+  "options" : {
+      "enable-local-file-access": "",
+      "page-size": "A4",
+      "encoding": "utf-8",
+      "footer-html": "repos/default/footer.html"
+  }
+}

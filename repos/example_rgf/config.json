@@ -1,0 +1,14 @@
+{
+  "logo_path": "repos/example_rgf/Rgf-logo.jpg",
+  "repo_name": "Дигитални репозиторијум Рударско-геолошког факултета Универзитета у Београду",
+  "repo_name_short": "[ДР РГФ]",
+  "img_width": "139px",
+  "img_height": "167px",
+  "timestamp_label": "Измењено:",
+  "options" : {
+      "enable-local-file-access": "",
+      "page-size": "A4",
+      "encoding": "utf-8",
+      "footer-html": "repos/example_rgf/footer.html"
+  }
+}

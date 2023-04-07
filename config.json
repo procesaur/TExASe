@@ -12,9 +12,11 @@
   },
 
   "log": "",
+  "wkhtmltopdf_path":  ["C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe", "usr/bin/wkhtmltopdf"],
+  "create_first_page": true,
+  "default_repo": "default",
 
   "services": {
-
     "extract": {
       "params": {
       },
@@ -47,12 +49,8 @@
         "header": "string",
         "title": "string",
         "authors": "string",
-        "logo": "string",
-        "repo_name": "string",
-        "repo_name_short": "string",
         "doi": "string",
-        "uri": "string",
-        "footer": "string"
+        "uri": "string"
       },
       "return": null
     },
