@@ -2,10 +2,12 @@ from flask import Flask, request, render_template, Response
 from os import environ
 from helper import cfg, get_return_type
 from rq_handler import process_req
-from redisworks import q
 from services import services
 from base64 import b64encode
-
+try:
+    from redisworks import q
+except:
+    q = None
 
 app = Flask(__name__)
 app.config["DEBUG"] = False
