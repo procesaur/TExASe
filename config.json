@@ -1,6 +1,6 @@
 {
   "tesseract": {
-    "path": "C:/Program Files/Tesseract-OCR/tesseract.exe",
+    "path": ["C:/Program Files/Tesseract-OCR/tesseract.exe", "usr/bin/tesseract"],
     "img_ext" : [".bmp", ".jpg", ".jpeg", ".gif", ".png"],
     "languages": ["srp", "srp_latn"]
   },

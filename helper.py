@@ -13,6 +13,14 @@ def load_conf(path=None):
 cfg = load_conf()
 
 
+def get_tesseract_path():
+    for path in cfg["tesseract"]["path"]:
+        if px.isfile(path):
+            return path
+
+    return "tesseract"
+
+
 def tryDel(file):
     try:
         remove(file)
@@ -33,3 +41,6 @@ def get_return_type(service):
      if "return" not in cfg["services"][service]:
          return None
      return cfg["services"][service]["return"]
+
+
+tesseract_path = get_tesseract_path()
