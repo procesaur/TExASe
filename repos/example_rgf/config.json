@@ -10,5 +10,16 @@
       "page-size": "A4",
       "encoding": "utf-8",
       "footer-html": "repos/example_rgf/footer.html"
-  }
+  },
+  "api_url": "http://dr.rgf.bg.ac.rs/api/items/",
+  "uri_url": "http://dr.rgf.bg.ac.rs/s/repo/item/",
+  "basic_metadata_fields": {
+    "title": "dcterms:title",
+    "creator": "dcterms:creator",
+    "doi": "bibo:doi",
+    "timestamp": "o:modified"
+  },
+  "citation_string":["dcterms:title", " | ", "dcterms:creator", " | ", "dcterms:source" ," | ", "dcterms:issued" ," | ",
+    "rgf:bibliographicCitationVolume" , " | ","rgf:bibliographicCitationIssue"
+  ]
 }

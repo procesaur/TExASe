@@ -9,25 +9,20 @@ from datetime import datetime
 from helper import default_repo, get_repo_cfg, create_cover, pdfkit_config
 from pdfkit import from_string as pdf_from_string
 from PyPDF2 import PdfMerger
+from requests import get
 
 
 def ocr_file(file_bytes, filetype, lang):
     bytesio = BytesIO(file_bytes)
     lang = ocr_lang(lang)
     if filetype == "pdf":
-        if create_cover:
-            return add_cover_page(ocr_pdf(bytesio, lang))
-        else:
-            return ocr_pdf(bytesio, lang)
+        return ocr_pdf(bytesio, lang)
 
     elif filetype == "image":
         pytesseract.tesseract_cmd = tesseract_path
-        if create_cover:
-            return add_cover_page(image_to_pdf_or_hocr(Image.open(bytesio), extension='pdf'))
-        else:
-            return image_to_pdf_or_hocr(Image.open(bytesio), extension='pdf')
-    else:
-        return file_bytes
+        return image_to_pdf_or_hocr(Image.open(bytesio), extension='pdf')
+
+    return file_bytes
 
 
 def ocr_image(bytesio, lang):
@@ -70,56 +65,65 @@ def extract_text(file_bytes):
     return text
 
 
-def add_cover_page(file_bytes, timestamp=None, repo="", metadata_url=""):
+def add_cover_page(file_bytes, repo="", metadata_id=""):
+    if create_cover:
+        page = create_cover_page(repo, metadata_id)
 
-    page = create_cover_page(timestamp, repo, metadata_url)
+        output = BytesIO()
+        merger = PdfMerger()
+        merger.append(BytesIO(page))
+        merger.append(BytesIO(file_bytes))
+        merger.write(output)
 
-    output = BytesIO()
-    merger = PdfMerger()
-    merger.append(BytesIO(page))
-    merger.append(BytesIO(file_bytes))
-    merger.write(output)
-
-    return output.getbuffer().tobytes()
+        return output.getbuffer().tobytes()
+    return file_bytes
 
 
-def create_cover_page(timestamp=None, repo="", metadata_url=""):
+def create_cover_page(repo="", metadata_id=""):
 
     if not repo:
         repo = default_repo
 
     repo_cfg, cover_page, logo_path = get_repo_cfg(repo)
 
-    if not timestamp:
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    uri = repo_cfg["uri_url"]+metadata_id
+    metadata, cite_str = get_metadata(metadata_id, repo)
+    if not metadata["timestamp"]:
+        metadata["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    title, authors, source, issued, volume, issue, doi, uri = get_metadata(metadata_url)
-
-    cite_str = create_cite_str(title, authors, source, issued, volume, issue)
-
-    cover_page = cover_page % (repo_cfg["repo_name_short"], repo_cfg["timestamp_label"], timestamp, title, authors,
-                               logo_path, repo_cfg["img_width"], repo_cfg["img_height"], repo_cfg["repo_name"],
-                               repo_cfg["repo_name_short"], cite_str, doi, uri)
+    cover_page = cover_page % (repo_cfg["repo_name_short"], repo_cfg["timestamp_label"], metadata["timestamp"],
+                               metadata["title"], metadata["creator"], logo_path,
+                               repo_cfg["img_width"], repo_cfg["img_height"], repo_cfg["repo_name"],
+                               repo_cfg["repo_name_short"], cite_str, metadata["doi"], uri)
 
     output = pdf_from_string(cover_page, css="repos/" + repo + "/css.css",
                              options=repo_cfg["options"], configuration=pdfkit_config)
     return output
 
 
-def get_metadata(metadata_url):
-    try:
-        return title, authors, source, issued, volume, issue, doi, uri
-    except:
-        return "", "", "", "", "", "", "", ""
+def get_metadata(metadata_id, repo=""):
+    if not repo:
+        repo = default_repo
+    repo_cfg, cover_page, logo_path = get_repo_cfg(repo)
 
+    metadata_json = get(repo_cfg["api_url"] + metadata_id).json()
 
-def create_cite_str(title, authors, source, issued, volume, issue):
-    cite_list = []
-    fields = [title, authors, source, issued, volume, issue]
+    citation_string = ""
+    for x in repo_cfg["citation_string"]:
+        if ":" in x:
+            try:
+                citation_string += ";".join([y["@value"] for y in metadata_json[x]])
+            except:
+                pass
+        else:
+            citation_string += x
 
-    for x in fields:
+    metadata = {}
+    for x in repo_cfg["basic_metadata_fields"]:
         try:
-            cite_list.append(x)
+            metadata[x] = ";".join([y["@value"] for y in metadata_json[repo_cfg["basic_metadata_fields"][x]]])
         except:
-            pass
-    return ' | '.join(cite_list)
+            metadata[x] = ""
+
+    return metadata, citation_string
+
