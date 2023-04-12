@@ -1,4 +1,5 @@
-from functions import ocr_file, extract_text, add_cover_page, get_metadata
+from ocrworks import ocr_file, extract_text
+from pdfworks import add_cover_page
 
 
 def extract(args):

@@ -10,5 +10,16 @@
       "page-size": "A4",
       "encoding": "utf-8",
       "footer-html": "repos/default/footer.html"
-  }
+  },
+  "api_url": "",
+  "uri_url": "",
+  "basic_metadata_fields": {
+    "title": "dcterms:title",
+    "creator": "dcterms:creator",
+    "doi": "bibo:doi",
+    "timestamp": "o:modified"
+  },
+  "citation_string":[
+    ""
+  ]
 }
