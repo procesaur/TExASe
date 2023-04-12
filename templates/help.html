@@ -1,5 +1,23 @@
-<h1 id="text-extraction-api-service-texase">Text Extraction Api Services - TExASe</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='main.css') }}">
+    <script>
+        function help(){
+            document.getElementById('if').src = "/help";
+        }
+    </script>
+</head>
+<body >
+
+<h1 id="text-extraction-api-services-texase">Text Extraction Api Services - TExASe</h1>
+<p><img src="static/default-logo.png" alt=""></p>
+<h4 id="texase-is-a-flask-application-for-document-processing-namely-extraction-of-text-from-it-with-application-of-ocr-if-necessary-">TExASe is a flask application for document processing, namely Extraction of text from it (with application of OCR if necessary).</h4>
+<h4 id="most-of-the-provided-services-require-a-file-as-an-input-">Most of the provided services require a file as an input.</h4>
+<h4 id="in-addition-to-this-texase-offers-support-for-repositories-through-a-set-of-services-and-functions-that-read-document-metadata-generate-citation-strings-and-most-notably-generate-cover-pages-for-the-documents-using-the-supplied-metadata-configuration-html-css-files-and-images-">In addition to this, TExASe offers support for repositories, through a set of services and functions that read document metadata, generate citation strings, and most notably, generate cover pages for the documents using the supplied metadata, configuration, html, css files and images.</h4>
 <h1 id="list-of-services">List of services</h1>
+<h3 id="basic-services">Basic services</h3>
 <ul>
 <li><strong>extract</strong> - Extracts text from the provided file using <a href="https://pypi.org/project/tika/">tika-python</a> port for <a href="https://tika.apache.org/">apache tika</a>. It requires only a file (with readable content) and returns text.</li>
 </ul>
@@ -14,6 +32,23 @@ It returns an HTML containing extracted text, as well as a base64 string of a ne
 </ul>
 <ul>
 <li><strong>renew</strong> - Only works with file_paths. It OCR-s a file on the provided path and then replace it with a new version.</li>
+</ul>
+<h3 id="repository-services">Repository services</h3>
+<ul>
+<li><strong>add_cover</strong> - Adds a cover page to a supplied PDF file. The cover page will contain information about supplied (<strong>repo</strong> param) or default repository, as well as metadata if appropriate item <strong>id</strong> for targeted repository was submitted.
+Cover page is created using <a href="https://pypi.org/project/pdfkit/">pdfkit</a> via <a href="https://wkhtmltopdf.org/">wkhtmltopdf</a>, and PDF pages are added or subtracted using <a href="https://pypi.org/project/PyPDF2/">PyPDF2</a>.</li>
+</ul>
+<ul>
+<li><strong>remove_cover</strong> - This will remove the cover page of a supplied pdf, if it has one, using <a href="https://pypi.org/project/PyPDF2/">PyPDF2</a>.</li>
+</ul>
+<ul>
+<li><strong>remove_all_covers</strong> - This will trigger <strong>remove_cover</strong> for all pdfs on a supplied <strong>path</strong>.</li>
+</ul>
+<ul>
+<li><strong>metadata</strong> - This will return metadata for a file, if you supply it with an appropriate <strong>id</strong> for a given of default <strong>repo</strong>.</li>
+</ul>
+<ul>
+<li><strong>citation</strong> - This works just like the <strong>metadata</strong> service, except it returns a citation string for the item instead of the metadata.</li>
 </ul>
 <h2 id="use-gui">Use GUI</h2>
 <p>Simply, on the left, pick a file and click process. The result will appear on the right.</p>
@@ -32,10 +67,15 @@ For example <strong>ocr</strong> service accepts <strong>lang</strong> (language
 These include:</p>
 <p><strong>tesseract</strong> : tesseract service options, including a list of default languages to be used in OCR, path to tesseract service, as well as a list of applicable extensions.</p>
 <p><strong>log</strong> : string, file location of a writable log file. If the file is specified and writable, all requests will be logged in it.</p>
+<p><strong>wkhtmltopdf_path</strong> : string, path to executables for <strong>wkhtmltopdf</strong>, required for creation of PDFs from HTML strings.</p>
+<p><strong>default_repo</strong> : string, name of the default repository (folder with required files in the <strong>repos</strong> dir of this project). This will affect creation of the cover pages for submitted PDFs.</p>
 <p><strong>redis</strong> : redis server options. If <strong>on</strong> is set to <strong>1</strong>, all requests will go through a redis queue on specified <strong>url</strong> and <strong>port</strong>. Redis is only available for services that do not return a value.</p>
 <p><strong>services</strong> a list of available services, and their respected parameter definitions.</p>
 <h1 id="requirements">Requirements</h1>
-<pre><code>sudo apt-<span class="hljs-built_in">get</span> install python3-<span class="hljs-built_in">dev</span> libxml2-<span class="hljs-built_in">dev</span> libxslt1-<span class="hljs-built_in">dev</span> tesseract-ocr
+<pre><code>sudo apt-<span class="hljs-built_in">get</span> install python3-<span class="hljs-built_in">dev</span> libxml2-<span class="hljs-built_in">dev</span> libxslt1-<span class="hljs-built_in">dev</span> tesseract-ocr ghostscript
 </code></pre><p>for ubuntu and</p>
-<pre><code>pip <span class="hljs-keyword">install</span> flask redis rq tika ocrmypdf pytesseract Pillow
+<pre><code>pip <span class="hljs-keyword">install</span> flask redis rq pdfkit tika ocrmypdf pytesseract Pillow
 </code></pre><p>from pip.</p>
+
+</body>
+</html>

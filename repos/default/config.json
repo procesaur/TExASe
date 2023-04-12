@@ -1,0 +1,26 @@
+{
+  "logo_path": "static/default-logo.png",
+  "repo_name": "Text Extraction Api Default Repository",
+  "repo_name_short": "TExASe",
+  "img_width": "170px",
+  "img_height": "170px",
+  "timestamp_label": "updated:",
+  "options" : {
+      "enable-local-file-access": "",
+      "page-size": "A4",
+      "encoding": "utf-8",
+      "footer-html": "repos/default/footer.html"
+  },
+  "create_first_page": true,
+  "api_url": "",
+  "uri_url": "",
+  "basic_metadata_fields": {
+    "title": "dcterms:title",
+    "creator": "dcterms:creator",
+    "doi": "bibo:doi",
+    "timestamp": "o:modified"
+  },
+  "citation_string":[
+    ""
+  ]
+}

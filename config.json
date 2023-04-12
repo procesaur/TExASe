@@ -12,9 +12,10 @@
   },
 
   "log": "",
+  "wkhtmltopdf_path":  ["C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe", "usr/bin/wkhtmltopdf"],
+  "default_repo": "default",
 
   "services": {
-
     "extract": {
       "params": {
       },
@@ -23,44 +24,67 @@
 
     "ocr": {
       "params": {
-        "lang": "string"
+        "lang": "string",
+        "id": "string",
+        "repo": "string"
       },
       "return": "file"
     },
 
     "ocr_and_extract": {
       "params": {
-        "lang": "string"
+        "lang": "string",
+        "id": "string",
+        "repo": "string"
       },
       "return": "html"
     },
 
     "renew": {
       "params": {
-        "lang": "string"
+        "lang": "string",
+        "id": "string",
+        "repo": "string"
       },
       "return": null
     },
 
-    "add_cover_page": {
+    "add_cover": {
       "params": {
-        "header": "string",
-        "title": "string",
-        "authors": "string",
-        "logo": "string",
-        "repo_name": "string",
-        "repo_name_short": "string",
-        "doi": "string",
-        "uri": "string",
-        "footer": "string"
+        "lang": "string",
+        "id": "string",
+        "repo": "string"
       },
-      "return": null
+      "return": "file"
     },
 
-    "remove_cover_page": {
+    "remove_cover": {
       "params": {
       },
-      "return": null
+       "return": "file"
+    },
+
+    "remove_all_covers": {
+      "params": {
+        "path": "string"
+      },
+       "return": "file"
+    },
+
+    "citation": {
+      "params": {
+        "id": "string",
+        "repo": "string"
+      },
+      "return": "text"
+    },
+
+    "metadata": {
+      "params": {
+        "id": "string",
+        "repo": "string"
+      },
+      "return": "text"
     }
   }
 }

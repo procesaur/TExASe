@@ -2,9 +2,7 @@ from pytesseract import pytesseract, image_to_pdf_or_hocr
 from PIL import Image
 from ocrmypdf import ocr as pdf_ocr
 from helper import cfg, tesseract_path
-from tika import parser
 from io import BytesIO
-from postprocessing import postprocess
 
 
 def ocr_file(file_bytes, filetype, lang):
@@ -16,8 +14,8 @@ def ocr_file(file_bytes, filetype, lang):
     elif filetype == "image":
         pytesseract.tesseract_cmd = tesseract_path
         return image_to_pdf_or_hocr(Image.open(bytesio), extension='pdf')
-    else:
-        return file_bytes
+
+    return file_bytes
 
 
 def ocr_image(bytesio, lang):
@@ -51,10 +49,3 @@ def get_available_langs():
         return None
 
     return cfg["tesseract"]["languages"]
-
-
-def extract_text(file_bytes):
-    bytesio = BytesIO(file_bytes)
-    text = parser.from_buffer(bytesio)["content"]
-    text = postprocess(text)
-    return text
