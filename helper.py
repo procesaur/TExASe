@@ -85,6 +85,5 @@ def should_create_cover(repo):
 
 
 pdfkit_config = get_pdfkit_config()
-create_cover = should_create_cover()
 default_repo = get_default_repo()
 tesseract_path = get_tesseract_path()

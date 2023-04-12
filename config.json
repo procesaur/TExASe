@@ -13,7 +13,7 @@
 
   "log": "",
   "wkhtmltopdf_path":  ["C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe", "usr/bin/wkhtmltopdf"],
-  "default_repo": "example_rgf",
+  "default_repo": "default",
 
   "services": {
     "extract": {

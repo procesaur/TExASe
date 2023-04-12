@@ -1,6 +1,6 @@
 from PyPDF2 import PdfMerger, PdfReader, PdfWriter
 from io import BytesIO
-from helper import create_cover, pdfkit_config
+from helper import should_create_cover, pdfkit_config
 from datetime import datetime
 from pdfkit import from_string as pdf_from_string
 from repoworks import get_repo_cfg, get_metadata_from_url, generate_citation_string
@@ -36,7 +36,7 @@ def remove_cover_page(file_bytes):
 
 
 def add_cover_page(file_bytes, item_id="", repo=""):
-    if create_cover(repo):
+    if should_create_cover(repo):
 
         if has_cover(file_bytes):
             remove_cover_page(file_bytes)

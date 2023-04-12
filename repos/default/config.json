@@ -1,5 +1,5 @@
 {
-  "logo_path": "repos/default/default-logo.png",
+  "logo_path": "static/default-logo.png",
   "repo_name": "Text Extraction Api Default Repository",
   "repo_name_short": "TExASe",
   "img_width": "170px",
