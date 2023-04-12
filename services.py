@@ -1,4 +1,4 @@
-from extractworks import extract_text
+from extractworks import extract_text, extract_all_text
 from ocrworks import ocr_file
 from pdfworks import add_cover_page, remove_cover_page, remove_all_filecovers
 from repoworks import get_citation_string, get_metadata
@@ -60,6 +60,11 @@ def metadata(args):
     return str(get_metadata(params["id"], params["repo"]))
 
 
+def extract_all(args):
+    file_bytes, filetype, params = args
+    return extract_all_text(params["path"])
+
+
 services = {
     "extract": extract,
     "ocr_file": ocr_file,
@@ -69,5 +74,6 @@ services = {
     "remove_cover": remove_cover,
     "remove_all_covers": remove_all_covers,
     "citation": citation,
-    "metadata": metadata
+    "metadata": metadata,
+    "extract_all": extract_all
 }

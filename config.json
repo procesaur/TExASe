@@ -88,6 +88,13 @@
         "repo": "string"
       },
       "return": "text"
+    },
+
+    "extract_all": {
+      "params": {
+        "path": "string"
+      },
+       "return": "file"
     }
   }
 }
