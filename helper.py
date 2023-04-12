@@ -63,19 +63,23 @@ def get_default_repo():
 
 
 def get_repo_cfg(repo):
+    if not repo:
+        repo = default_repo
     with open("repos/" + repo + "/config.json", "r", encoding="utf-8") as cf:
         cfg = load(cf)
     with open("repos/" + repo + "/cover.html", "r", encoding="utf-8") as hf:
         html = hf.read()
 
     logo_path = px.join(px.dirname(__file__), cfg["logo_path"])
+    css_path = "repos/" + repo + "/css.css"
 
-    return cfg, html, logo_path
+    return cfg, html, logo_path, css_path
 
 
-def should_create_cover():
-    if "create_first_page" in cfg:
-        if cfg["create_first_page"]:
+def should_create_cover(repo):
+    repo_cfg, cover_page, logo_path, css_path = get_repo_cfg(repo)
+    if "create_first_page" in repo_cfg:
+        if repo_cfg["create_first_page"]:
             return True
     return False
 

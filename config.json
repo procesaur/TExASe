@@ -13,8 +13,7 @@
 
   "log": "",
   "wkhtmltopdf_path":  ["C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe", "usr/bin/wkhtmltopdf"],
-  "create_first_page": true,
-  "default_repo": "default",
+  "default_repo": "example_rgf",
 
   "services": {
     "extract": {
@@ -25,40 +24,67 @@
 
     "ocr": {
       "params": {
-        "lang": "string"
+        "lang": "string",
+        "id": "string",
+        "repo": "string"
       },
       "return": "file"
     },
 
     "ocr_and_extract": {
       "params": {
-        "lang": "string"
+        "lang": "string",
+        "id": "string",
+        "repo": "string"
       },
       "return": "html"
     },
 
     "renew": {
       "params": {
-        "lang": "string"
+        "lang": "string",
+        "id": "string",
+        "repo": "string"
       },
       "return": null
     },
 
-    "add_cover_page": {
+    "add_cover": {
       "params": {
-        "header": "string",
-        "title": "string",
-        "authors": "string",
-        "doi": "string",
-        "uri": "string"
+        "lang": "string",
+        "id": "string",
+        "repo": "string"
       },
-      "return": null
+      "return": "file"
     },
 
-    "remove_cover_page": {
+    "remove_cover": {
       "params": {
       },
-      "return": null
+       "return": "file"
+    },
+
+    "remove_all_covers": {
+      "params": {
+        "path": "string"
+      },
+       "return": "file"
+    },
+
+    "citation": {
+      "params": {
+        "id": "string",
+        "repo": "string"
+      },
+      "return": "text"
+    },
+
+    "metadata": {
+      "params": {
+        "id": "string",
+        "repo": "string"
+      },
+      "return": "text"
     }
   }
 }

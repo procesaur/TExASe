@@ -49,10 +49,10 @@ def process_file_req(req, query_parameters):
     return file_bytes, filetype, filename
 
 
-def get_string(params, name, alternative=None):
+def get_string(params, name, alternative=""):
     try:
         result = params.get(name)
-        if result == "":
+        if result == "" or result is None:
             result = alternative
     except:
         result = alternative
