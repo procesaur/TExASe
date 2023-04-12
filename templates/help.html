@@ -36,8 +36,9 @@ It returns an HTML containing extracted text, as well as a base64 string of a ne
 <h3 id="repository-services">Repository services</h3>
 <ul>
 <li><strong>add_cover</strong> - Adds a cover page to a supplied PDF file. The cover page will contain information about supplied (<strong>repo</strong> param) or default repository, as well as metadata if appropriate item <strong>id</strong> for targeted repository was submitted.
-Cover page is created using <a href="https://pypi.org/project/pdfkit/">pdfkit</a> via <a href="https://wkhtmltopdf.org/">wkhtmltopdf</a>, and PDF pages are added or subtracted using <a href="https://pypi.org/project/PyPDF2/">PyPDF2</a>.</li>
+Cover page is created using <a href="https://pypi.org/project/pdfkit/">pdfkit</a> via <a href="https://wkhtmltopdf.org/">wkhtmltopdf</a>, and PDF pages are added or subtracted using <a href="https://pypi.org/project/PyPDF2/">PyPDF2</a>. </li>
 </ul>
+<p><em>Cover will also be added by using the above services (except extract), if <strong>create_first_page</strong> param is set to <strong>true</strong> in resprected repository config file (e.g. <a href="repos/default/config.json">repos/default/config.json</a>) and <em>*nocover</em></em> param is not set to false</p>
 <ul>
 <li><strong>remove_cover</strong> - This will remove the cover page of a supplied pdf, if it has one, using <a href="https://pypi.org/project/PyPDF2/">PyPDF2</a>.</li>
 </ul>
@@ -76,6 +77,7 @@ These include:</p>
 </code></pre><p>for ubuntu and</p>
 <pre><code>pip <span class="hljs-keyword">install</span> flask redis rq pdfkit tika ocrmypdf pytesseract Pillow
 </code></pre><p>from pip.</p>
+
 
 </body>
 </html>

@@ -13,14 +13,14 @@ def extract(args):
 def ocr(args):
     file_bytes, filetype, params = args
     new_file = ocr_file(file_bytes, filetype, params["lang"])
-    new_file = add_cover_page(new_file, item_id=params["id"], repo=params["repo"])
+    new_file = add_cover_page(new_file, item_id=params["id"], repo=params["repo"], nocover=params["nocover"])
     return None, new_file
   
 
 def renew(args):
     file_bytes, filetype, params = args
     new_file = ocr_file(file_bytes, filetype, params["lang"])
-    new_file = add_cover_page(new_file, item_id=params["id"], repo=params["repo"])
+    new_file = add_cover_page(new_file, item_id=params["id"], repo=params["repo"], nocover=params["nocover"])
     with open(params["file_path"], "wb") as out_file:
         out_file.write(new_file)
     
@@ -29,7 +29,7 @@ def ocr_and_extract(args):
     file_bytes, filetype, params = args
     new_file = ocr_file(file_bytes, filetype, params["lang"])
     text = extract_text(new_file)
-    new_file = add_cover_page(new_file, item_id=params["id"], repo=params["repo"])
+    new_file = add_cover_page(new_file, item_id=params["id"], repo=params["repo"], nocover=params["nocover"])
     return text, new_file
 
 

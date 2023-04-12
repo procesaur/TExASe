@@ -1,6 +1,6 @@
 # Text Extraction Api Services - TExASe
 
-![](static/default-logo.png "It-Sr-NER")
+![](static/default-logo.png)
 
 #### TExASe is a flask application for document processing, namely Extraction of text from it (with application of OCR if necessary). 
 #### Most of the provided services require a file as an input.
@@ -26,7 +26,9 @@
   
 ### Repository services
 - **add_cover** - Adds a cover page to a supplied PDF file. The cover page will contain information about supplied (**repo** param) or default repository, as well as metadata if appropriate item **id** for targeted repository was submitted.
-Cover page is created using [pdfkit](https://pypi.org/project/pdfkit/) via [wkhtmltopdf](https://wkhtmltopdf.org/), and PDF pages are added or subtracted using [PyPDF2](https://pypi.org/project/PyPDF2/).
+Cover page is created using [pdfkit](https://pypi.org/project/pdfkit/) via [wkhtmltopdf](https://wkhtmltopdf.org/), and PDF pages are added or subtracted using [PyPDF2](https://pypi.org/project/PyPDF2/). 
+  
+*Cover will also be added by using the above services (except extract), if **create_first_page** param is set to **true** in resprected repository config file (e.g. [repos/default/config.json](repos/default/config.json)) and **nocover** param is not set to false
 
 
 - **remove_cover** - This will remove the cover page of a supplied pdf, if it has one, using [PyPDF2](https://pypi.org/project/PyPDF2/).

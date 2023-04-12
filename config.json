@@ -26,7 +26,8 @@
       "params": {
         "lang": "string",
         "id": "string",
-        "repo": "string"
+        "repo": "string",
+        "nocover": "bool"
       },
       "return": "file"
     },
@@ -35,7 +36,8 @@
       "params": {
         "lang": "string",
         "id": "string",
-        "repo": "string"
+        "repo": "string",
+        "nocover": "bool"
       },
       "return": "html"
     },
@@ -44,7 +46,8 @@
       "params": {
         "lang": "string",
         "id": "string",
-        "repo": "string"
+        "repo": "string",
+        "nocover": "bool"
       },
       "return": null
     },
