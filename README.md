@@ -83,7 +83,7 @@ These include:
 **services** a list of available services, and their respected parameter definitions.
 
 # Requirements
-    sudo apt-get install python3-dev libxml2-dev libxslt1-dev tesseract-ocr
+    sudo apt-get install python3-dev libxml2-dev libxslt1-dev tesseract-ocr ghostscript
 
 for ubuntu and
 
