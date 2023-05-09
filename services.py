@@ -21,7 +21,7 @@ def renew(args):
     file_bytes, filetype, filename, params = args
     new_file = ocr_file(file_bytes, filetype, params["lang"])
     new_file = add_cover_page(new_file, item_id=params["id"], repo=params["repo"], nocover=params["nocover"])
-    with open(params["file"], "wb") as out_file:
+    with open(filename, "wb") as out_file:
         out_file.write(new_file)
     
     
