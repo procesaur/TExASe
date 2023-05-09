@@ -9,7 +9,7 @@ def process_req(req, service):
     file_bytes, filetype, filename = process_file_req(req, query_parameters)
     params = get_params(query_parameters, service)
     log_stuff([request.remote_addr, filename, ";".join(params)])
-    args = (file_bytes, filetype, params)
+    args = (file_bytes, filetype, filename, params)
 
     return filename, args
 
