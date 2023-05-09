@@ -23,6 +23,7 @@ def renew(args):
     new_file = add_cover_page(new_file, item_id=params["id"], repo=params["repo"], nocover=params["nocover"])
     with open(filename, "wb") as out_file:
         out_file.write(new_file)
+    return None, None
     
     
 def ocr_and_extract(args):

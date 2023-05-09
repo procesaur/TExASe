@@ -42,6 +42,9 @@ def api(service):
     else:
         text, out_file = f(args)
 
+        if text is None and out_file is None:
+            return ""
+
         if return_type == "text":
             return text
 
