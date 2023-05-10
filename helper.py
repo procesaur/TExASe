@@ -73,6 +73,8 @@ def get_repo_cfg(repo):
     logo_path = px.join(px.dirname(__file__), cfg["logo_path"])
     css_path = px.join(px.dirname(__file__), "repos/" + repo + "/css.css")
 
+    cfg["options"]["footer-html"] = px.join(px.dirname(__file__), cfg["options"]["footer-html"])
+
     return cfg, html, logo_path, css_path
 
 
