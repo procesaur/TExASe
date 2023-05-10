@@ -63,11 +63,17 @@ def create_cover_page(repo="", metadata_id=""):
     repo_cfg, cover_page, logo_path, css_path = get_repo_cfg(repo)
 
     uri = repo_cfg["uri_url"] + metadata_id
-    metadata = get_metadata_from_url(repo_cfg["uri_url"], metadata_id)
+    metadata = get_metadata_from_url(repo_cfg["api_url"], metadata_id)
 
     for field in repo_cfg["basic_metadata_fields"]:
-        if field not in metadata.keys():
+        key = repo_cfg["basic_metadata_fields"][field]
+        if key not in metadata.keys():
             metadata[field] = ""
+        else:
+            try:
+                metadata[field] = ";".join([y["@value"] for y in metadata[key]])
+            except:
+                pass
 
     cite_str = generate_citation_string(repo_cfg["citation_string"], metadata)
     if "timestamp" not in metadata.keys():
