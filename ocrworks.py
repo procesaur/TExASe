@@ -3,12 +3,15 @@ from PIL import Image
 from ocrmypdf import ocr as pdf_ocr
 from helper import cfg, tesseract_path
 from io import BytesIO
+from pdfworks import has_cover
 
 
 def ocr_file(file_bytes, filetype, lang):
     bytesio = BytesIO(file_bytes)
     lang = ocr_lang(lang)
     if filetype == "pdf":
+        if has_cover(file_bytes):
+            return file_bytes
         return ocr_pdf(bytesio, lang)
 
     elif filetype == "image":

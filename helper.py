@@ -65,13 +65,13 @@ def get_default_repo():
 def get_repo_cfg(repo):
     if not repo:
         repo = default_repo
-    with open("repos/" + repo + "/config.json", "r", encoding="utf-8") as cf:
+    with open(px.join(px.dirname(__file__), "repos/" + repo + "/config.json"), "r", encoding="utf-8") as cf:
         cfg = load(cf)
-    with open("repos/" + repo + "/cover.html", "r", encoding="utf-8") as hf:
+    with open(px.join(px.dirname(__file__), "repos/" + repo + "/cover.html"), "r", encoding="utf-8") as hf:
         html = hf.read()
 
     logo_path = px.join(px.dirname(__file__), cfg["logo_path"])
-    css_path = "repos/" + repo + "/css.css"
+    css_path = px.join(px.dirname(__file__), "repos/" + repo + "/css.css")
 
     return cfg, html, logo_path, css_path
 
