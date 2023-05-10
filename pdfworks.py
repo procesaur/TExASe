@@ -26,9 +26,12 @@ def remove_cover_page(file_bytes):
         for i, page in enumerate(input.pages):
             if i > 0:
                 writer.add_page(page)
-        writer.addMetadata({
-            '/has_texase_cover': 'no'
-        })
+        try:
+            writer.add_metadata({
+                '/has_texase_cover': 'no'
+            })
+        except Exception as e:
+            print(e)
         writer.write(output)
         return output.getbuffer().tobytes()
     except:
