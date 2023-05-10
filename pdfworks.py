@@ -39,7 +39,7 @@ def add_cover_page(file_bytes, item_id="", repo="", nocover=False):
     if should_create_cover(repo) and not nocover:
 
         if has_cover(file_bytes):
-            remove_cover_page(file_bytes)
+            file_bytes = remove_cover_page(file_bytes)
 
         page = create_cover_page(repo, item_id)
 
