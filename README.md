@@ -85,10 +85,65 @@ These include:
 **services** a list of available services, and their respected parameter definitions.
 
 # Requirements
-    sudo apt-get install python3-dev libxml2-dev libxslt1-dev tesseract-ocr ghostscript
+    sudo apt-get install python3-dev libxml2-dev libxslt1-dev wkhtmltopdf ghostscript
 
-for ubuntu and
-
-    pip install flask redis rq pdfkit tika ocrmypdf pytesseract Pillow
+    pip install flask redis rq pdfkit tika ocrmypdf pytesseract Pillow PyPDF2
 
 from pip.
+
+## Full Instalation example
+
+(as apache site using wsgi on ubuntu)
+
+install redis:
+
+    sudo apt install redis
+    redis-cli --version
+    sudo systemctl status redis
+
+install other requirements including custom wkhtmltopdf and tesseract:
+
+    sudo apt-get install python3-dev libxml2-dev libxslt1-dev wkhtmltopdf ghostscript
+    cd /opt
+    sudo wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.jammy_amd64.deb
+    sudo dpkg-deb -R wkhtmltox_0.12.6.1-2.jammy_amd64.deb wkhtml
+    sudo mv wkhtml/usr/local/bin/wkhtmlto* /usr/bin/
+    sudo apt update
+    sudo add-apt-repository ppa:alex-p/tesseract-ocr-devel	
+    sudo apt install -y tesseract-ocr
+
+install python packages:
+
+    sudo apt install python3-pip
+    pip install flask redis rq pdfkit tika ocrmypdf pytesseract Pillow PyPDF2
+
+
+install TExASe:
+
+    cd /var/www
+    sudo git clone https://github.com/procesaur/TExASe.git
+    sudo mv /var/www/TExASe/tessdata/* /usr/share/tesseract-ocr/5/tessdata/
+    cd /etc/apache2/sites-available/
+    sudo nano texase.conf
+
+
+paste:
+
+    <VirtualHost *:5001>
+    
+    WSGIDaemonProcess texase user=www-data group=www-data threads=5
+            WSGIScriptAlias / /var/www/TExASe/texase.wsgi
+    
+            <Directory /var/www/TExASe>
+                    WSGIProcessGroup texase
+                    WSGIApplicationGroup %{GLOBAL}
+                    Order deny,allow
+                    Allow from 127.0.0.1 ::1/128 <ADRESA SERVERA>
+            </Directory>
+    </VirtualHost>
+
+
+exit nano
+
+    sudo a2ensite texase
+    sudo service apache2 restart
