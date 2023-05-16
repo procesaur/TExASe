@@ -1,6 +1,6 @@
-import redis
-from rq import Worker, Queue, Connection
+from rq import Queue
 from helper import cfg
+import redis
 
 
 def redis_conn():
@@ -19,17 +19,8 @@ def redis_queue():
         return None
     else:
         conn = redis_conn()
-        q = Queue(connection=conn)
+        q = Queue(connection=conn, default_timeout=3600)
         return q
 
 
 q = redis_queue()
-
-if __name__ == '__main__':
-    listen = ['default']
-    conn = redis_conn()
-    redis_q = q
-
-    with Connection(conn):
-        worker = Worker(list(map(Queue, listen)))
-        worker.work()
