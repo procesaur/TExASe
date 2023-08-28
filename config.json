@@ -2,7 +2,8 @@
   "tesseract": {
     "path": ["C:/Program Files/Tesseract-OCR/tesseract.exe", "usr/bin/tesseract"],
     "img_ext" : [".bmp", ".jpg", ".jpeg", ".gif", ".png"],
-    "languages": ["srp", "srp_latn"]
+    "languages": ["srp", "srp_latn"],
+    "image_improve": 1
   },
 
   "redis": {
@@ -13,6 +14,7 @@
 
   "log": "",
   "wkhtmltopdf_path":  ["C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe", "usr/bin/wkhtmltopdf"],
+  "poppler_path": ["C:/Program Files/poppler-23.08.0/Library/bin", "usr/bin"],
   "default_repo": "default",
 
   "services": {

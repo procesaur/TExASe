@@ -102,3 +102,12 @@ def remove_all_filecovers(path):
                     fb.write(new_file)
             except:
                 pass
+
+
+def merge_pages(pages):
+    output = BytesIO()
+    merger = PdfMerger()
+    for page in pages:
+        merger.append(BytesIO(page))
+    merger.write(output)
+    return output.getbuffer().tobytes()

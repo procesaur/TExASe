@@ -30,6 +30,14 @@ def get_wkhtmltopdf_path():
     return "wkhtmltopdf"
 
 
+def get_poppler_path():
+    for path in cfg["poppler_path"]:
+        if px.isdir(path):
+            return path
+
+    return "poppler"
+
+
 def get_pdfkit_config():
     return configuration(wkhtmltopdf=get_wkhtmltopdf_path())
 
@@ -86,6 +94,16 @@ def should_create_cover(repo):
     return False
 
 
+def should_improve_image():
+    if "image_improve" not in cfg["tesseract"]:
+        return False
+    if cfg["tesseract"]["image_improve"] > 0:
+        return True
+    return False
+
+
+image_improve = should_improve_image()
 pdfkit_config = get_pdfkit_config()
 default_repo = get_default_repo()
 tesseract_path = get_tesseract_path()
+poppler_path = get_poppler_path()

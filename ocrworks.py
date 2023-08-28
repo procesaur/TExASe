@@ -1,9 +1,12 @@
 from pytesseract import pytesseract, image_to_pdf_or_hocr
 from PIL import Image
-from ocrmypdf import ocr as pdf_ocr
-from helper import cfg, tesseract_path
+from helper import cfg, tesseract_path, poppler_path, image_improve
 from io import BytesIO
-from pdfworks import has_cover
+from pdfworks import has_cover, merge_pages
+from pdf2image import convert_from_bytes
+from cv2 import cvtColor, resize, threshold, THRESH_OTSU, THRESH_BINARY, erode
+from cv2 import COLOR_BGR2RGB, COLOR_RGB2BGR, COLOR_BGR2GRAY
+from numpy import array as nparray, ndarray
 
 
 def ocr_file(file_bytes, filetype, lang):
@@ -12,28 +15,25 @@ def ocr_file(file_bytes, filetype, lang):
     if filetype == "pdf":
         if has_cover(file_bytes):
             return file_bytes
-        return ocr_pdf(bytesio, lang)
+        return ocr_pdf(file_bytes, lang)
 
     elif filetype == "image":
-        pytesseract.tesseract_cmd = tesseract_path
-        return image_to_pdf_or_hocr(Image.open(bytesio), extension='pdf')
+        return ocr_image(Image.open(bytesio), lang)
 
     return file_bytes
 
 
-def ocr_image(bytesio, lang):
+def ocr_image(image, lang):
+    if image_improve:
+        image = improve_image(image)
     pytesseract.tesseract_cmd = tesseract_path
-    return image_to_pdf_or_hocr(Image.open(bytesio), extension='pdf', lang=lang)
+    return image_to_pdf_or_hocr(image, extension='pdf', lang=lang)
 
 
 def ocr_pdf(bytesio, lang):
-    output = BytesIO()
-    if lang:
-        pdf_ocr(input_file=bytesio, output_file=output, skip_text=True, deskew=True, language=lang)
-    else:
-        pdf_ocr(input_file=bytesio, output_file=output, skip_text=True, deskew=True)
-
-    return output.getbuffer().tobytes()
+    images = convert_from_bytes(bytesio, poppler_path=poppler_path)
+    pdfs = [ocr_image(image, lang) for image in images]
+    return merge_pages(pdfs)
 
 
 def ocr_lang(lang):
@@ -52,3 +52,20 @@ def get_available_langs():
         return None
 
     return cfg["tesseract"]["languages"]
+
+
+def convert_from_cv2_to_image(img: ndarray) -> Image:
+    return Image.fromarray(cvtColor(img, COLOR_BGR2RGB))
+
+
+def convert_from_image_to_cv2(img: Image) -> ndarray:
+    return cvtColor(nparray(img), COLOR_RGB2BGR)
+
+
+def improve_image(image):
+    img = convert_from_image_to_cv2(image)
+    img = resize(img, (0, 0), fx=2, fy=2)
+    gry = cvtColor(img, COLOR_BGR2GRAY)
+    erd = erode(gry, None, iterations=1)
+    thr = threshold(erd, 0, 255, THRESH_BINARY + THRESH_OTSU)[1]
+    return convert_from_cv2_to_image(thr)
