@@ -12,10 +12,10 @@
       "footer-html": "repos/default/footer.html"
   },
   "create_first_page": false,
-  "aggressive_ocr": true,
+  "aggressive_ocr": false,
   "pdf_optimization": 3,
   "fast_ocr": false,
-  "force_ocr": true,
+  "force_ocr": false,
   "api_url": "",
   "uri_url": "",
   "basic_metadata_fields": {
