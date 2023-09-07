@@ -18,7 +18,6 @@ def get_tesseract_path():
     for path in cfg["tesseract"]["path"]:
         if px.isfile(path):
             return path
-
     return "tesseract"
 
 
@@ -26,7 +25,6 @@ def get_wkhtmltopdf_path():
     for path in cfg["wkhtmltopdf_path"]:
         if px.isfile(path):
             return path
-
     return "wkhtmltopdf"
 
 
@@ -34,8 +32,21 @@ def get_poppler_path():
     for path in cfg["poppler_path"]:
         if px.isdir(path):
             return path
+    return None
 
-    return "poppler"
+
+def get_unpaper_path():
+    for path in cfg["unpaper_path"]:
+        if px.isdir(path):
+            return path
+    return None
+
+
+def get_pngquant_path():
+    for path in cfg["pngquant_path"]:
+        if px.isdir(path):
+            return path
+    return None
 
 
 def get_pdfkit_config():
@@ -59,9 +70,9 @@ def log_stuff(stuff):
 
 
 def get_return_type(service):
-     if "return" not in cfg["services"][service]:
-         return None
-     return cfg["services"][service]["return"]
+    if "return" not in cfg["services"][service]:
+        return None
+    return cfg["services"][service]["return"]
 
 
 def get_default_repo():
@@ -86,7 +97,7 @@ def get_repo_cfg(repo):
     return cfg, html, logo_path, css_path
 
 
-def should_create_cover(repo):
+def should_create_cover(repo=None):
     repo_cfg, cover_page, logo_path, css_path = get_repo_cfg(repo)
     if "create_first_page" in repo_cfg:
         if repo_cfg["create_first_page"]:
@@ -94,16 +105,58 @@ def should_create_cover(repo):
     return False
 
 
-def should_improve_image():
-    if "image_improve" not in cfg["tesseract"]:
-        return False
-    if cfg["tesseract"]["image_improve"] > 0:
-        return True
+def should_aggro_ocr(repo=None):
+    if not repo:
+        repo = get_default_repo()
+    repo_cfg, cover_page, logo_path, css_path = get_repo_cfg(repo)
+    if "aggressive_ocr" in repo_cfg:
+        if repo_cfg["aggressive_ocr"]:
+            return True
     return False
 
 
-image_improve = should_improve_image()
+def should_clean(repo=None):
+    if not repo:
+        repo = get_default_repo()
+    repo_cfg, cover_page, logo_path, css_path = get_repo_cfg(repo)
+    if "fast_ocr" in repo_cfg:
+        if repo_cfg["fast_ocr"] and unpaper_path:
+            return True
+    return False
+
+
+def should_deskew(repo=None):
+    if not repo:
+        repo = get_default_repo()
+    repo_cfg, cover_page, logo_path, css_path = get_repo_cfg(repo)
+    if "fast_ocr" in repo_cfg:
+        if repo_cfg["fast_ocr"]:
+            return True
+    return False
+
+
+def should_optimize(repo=None):
+    if not repo:
+        repo = get_default_repo()
+    repo_cfg, cover_page, logo_path, css_path = get_repo_cfg(repo)
+    if "pdf_optimization" in repo_cfg:
+        if pngquant_path:
+            return repo_cfg["pdf_optimization"]
+    return 0
+
+
+def should_force_ocr(repo=None):
+    if not repo:
+        repo = get_default_repo()
+    repo_cfg, cover_page, logo_path, css_path = get_repo_cfg(repo)
+    if "force_ocr" in repo_cfg:
+        return repo_cfg["force_ocr"]
+    return False
+
+
 pdfkit_config = get_pdfkit_config()
 default_repo = get_default_repo()
 tesseract_path = get_tesseract_path()
 poppler_path = get_poppler_path()
+pngquant_path = get_pngquant_path()
+unpaper_path = get_unpaper_path()

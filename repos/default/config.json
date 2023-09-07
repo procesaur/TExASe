@@ -11,7 +11,11 @@
       "encoding": "utf-8",
       "footer-html": "repos/default/footer.html"
   },
-  "create_first_page": true,
+  "create_first_page": false,
+  "aggressive_ocr": true,
+  "pdf_optimization": 3,
+  "fast_ocr": false,
+  "force_ocr": true,
   "api_url": "",
   "uri_url": "",
   "basic_metadata_fields": {

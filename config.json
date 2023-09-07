@@ -15,6 +15,8 @@
   "log": "",
   "wkhtmltopdf_path":  ["C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe", "usr/bin/wkhtmltopdf"],
   "poppler_path": ["C:/Program Files/poppler-23.08.0/Library/bin", "usr/bin"],
+  "unpaper_path": ["C:/ProgramData/chocolatey/bin", "usr/bin"],
+  "pngquant_path": ["C:/Program Files/pngquant", "usr/bin"],
   "default_repo": "default",
 
   "services": {

@@ -12,6 +12,10 @@
       "footer-html": "repos/example_rgf/footer.html"
   },
   "create_first_page": true,
+  "aggressive_ocr": false,
+  "pdf_optimization": 3,
+  "fast_ocr": false,
+  "force_ocr": false,
   "api_url": "http://dr.rgf.bg.ac.rs/api/items/",
   "uri_url": "http://dr.rgf.bg.ac.rs/s/repo/item/",
   "basic_metadata_fields": {
